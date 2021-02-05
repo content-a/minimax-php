@@ -1,0 +1,32 @@
+{
+  "name": "content-a/minimax-php",
+  "description": "Php library for making api calls for Minimax.",
+  "minimum-stability": "stable",
+  "license": "GPL-3.0-only",
+  "authors": [
+    {
+      "name": "Rok Lesjak",
+      "email": "rok@contenta.si"
+    }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "^5.2",
+    "guzzlehttp/guzzle": "^7.0",
+    "ext-json": "*",
+    "symfony/serializer": "5.x-dev",
+    "symfony/property-access": "5.x-dev"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  },
+  "autoload": {
+    "psr-4": {
+      "MinimaxApi\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MinimaxApi\\Tests\\": "tests/"
+    }
+  }
+}
