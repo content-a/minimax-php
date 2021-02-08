@@ -73,5 +73,6 @@ class MinimaxApiTest extends TestCase
         $item = new Item($minimax->getAccessToken(), $organizationId);
         $item->delete($item_code->ItemId);
 
+
     }
 }
