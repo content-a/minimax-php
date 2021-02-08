@@ -32,6 +32,14 @@ class MinimaxApi
     // Default date format.
     const DATE_FORMAT = "Y-m-d";
 
+    /**
+     * Initialization of api
+     *
+     * @param string $clientId Client id
+     * @param string $clientSecret Client secret
+     * @param string $userName User name
+     * @param string $userPassword User password
+     */
     public function __construct($clientId, $clientSecret, $userName, $userPassword)
     {
         // Set credentials.

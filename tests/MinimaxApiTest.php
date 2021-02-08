@@ -3,7 +3,6 @@
 namespace MinimaxApi\Tests;
 
 use Dotenv\Dotenv;
-use JMS\Serializer\SerializerBuilder;
 use MinimaxApi\Models\Country;
 use MinimaxApi\Models\Currency;
 use MinimaxApi\Models\Item;
@@ -13,11 +12,6 @@ use MinimaxApi\Models\SearchFilter;
 use MinimaxApi\Models\VatRate;
 use MinimaxApi\Traits\Response;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class MinimaxApiTest extends TestCase
 {
@@ -52,7 +46,6 @@ class MinimaxApiTest extends TestCase
         $create_item->VatRate = new mMApiFkField($vatrate->VatRateId);
 //        $itemId = $create_item->add();
 
-
         // Retrieve all items.
         $item = new Item($minimax->getAccessToken(), $organizationId);
         $items = $item->getAll();
@@ -61,6 +54,7 @@ class MinimaxApiTest extends TestCase
         // Retrieve item by code.
         $item_code = new Item($minimax->getAccessToken(), $organizationId);
         $item_code = $item_code->getByCode("TEST-1");
+
 
 
         //Update item.
