@@ -14,21 +14,21 @@ trait ModelGetAll
     /**
      * Get all models.
      *
-     * @param SearchFilter $searchFilter
+     * @param string $parameters
      *
      * @return object
      */
-    public function getAll($searchFilter = null){
-        // If no search filter is passed, create empty one.
-        if($searchFilter == null)
-            $searchFilter = new SearchFilter();
+    public function getAll($parameters = null){
 
-        // Convert filter into json.
-        $body = json_encode($searchFilter);
+        $url = MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name;
 
-        $response = $this->client->request('GET', MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name, [
-            'body' => $body,
-        ]);
+        // If parameters are set, add them to url.
+        if($parameters != null){
+            $parametersUrl = urlencode($parameters);
+            $url .= "?SearchString=" . $parametersUrl;
+        }
+
+        $response = $this->client->request('GET', $url);
 
         return Response::searchResult($response);
     }

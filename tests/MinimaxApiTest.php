@@ -117,7 +117,7 @@ class MinimaxApiTest extends TestCase
         $organizationId = $minimax->getOrganizations()[0]["Organisation"]["ID"];
 
         $report = new ReportTemplate($minimax->getAccessToken(), $organizationId);
-        $report = $report->getAll();
+        $report = $report->getAll('IR');
         throw new \Exception(json_encode($report));
 
     }
