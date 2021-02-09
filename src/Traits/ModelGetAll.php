@@ -14,17 +14,17 @@ trait ModelGetAll
     /**
      * Get all models.
      *
-     * @param string $parameters
+     * @param string $searchString
      *
      * @return object
      */
-    public function getAll($parameters = null){
+    public function getAll($searchString = null){
 
         $url = MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name;
 
         // If parameters are set, add them to url.
-        if($parameters != null){
-            $parametersUrl = urlencode($parameters);
+        if($searchString != null){
+            $parametersUrl = urlencode($searchString);
             $url .= "?SearchString=" . $parametersUrl;
         }
 
