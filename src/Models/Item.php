@@ -116,11 +116,24 @@ class Item
     // Mandatory field. Ignored on create request.
     public $RowVersion;
 
+    /**
+     * @var Client
+     */
     protected $client;
 
+    /**
+     * Access token.
+     */
     protected $accessToken;
+
+    /**
+     * Organisation id.
+     */
     protected $organizationId;
 
+    /**
+     * Model name.
+     */
     private $model_name = "items";
 
 }
