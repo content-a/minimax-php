@@ -10,6 +10,7 @@ use MinimaxApi\Models\Employee;
 use MinimaxApi\Models\Item;
 use MinimaxApi\Models\MinimaxApi;
 use MinimaxApi\Models\mMApiFkField;
+use MinimaxApi\Models\PaymentMethod;
 use MinimaxApi\Models\ReportTemplate;
 use MinimaxApi\Models\SearchFilter;
 use MinimaxApi\Models\VatRate;
@@ -105,7 +106,24 @@ class MinimaxApiTest extends TestCase
 //
 //    }
 
-    public function testReport()
+//    public function testReport()
+//    {
+//        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
+//        $dotenv->load();
+//
+//        // Create minimax with credentials.
+//        $minimax = new MinimaxApi($_ENV["CLIENT_ID"], $_ENV["CLIENT_SECRET"], $_ENV["USER_NAME"], $_ENV["USER_PASSWORD"]);
+//
+//        // Get first organization.
+//        $organizationId = $minimax->getOrganizations()[0]["Organisation"]["ID"];
+//
+//        $report = new ReportTemplate($minimax->getAccessToken(), $organizationId);
+//        $report = $report->getAll('IR');
+//        throw new \Exception(json_encode($report));
+//
+//    }
+
+    public function testPaymentMethod()
     {
         $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
         $dotenv->load();
@@ -116,9 +134,9 @@ class MinimaxApiTest extends TestCase
         // Get first organization.
         $organizationId = $minimax->getOrganizations()[0]["Organisation"]["ID"];
 
-        $report = new ReportTemplate($minimax->getAccessToken(), $organizationId);
-        $report = $report->getAll('IR');
-        throw new \Exception(json_encode($report));
+        $paymentMethod = new PaymentMethod($minimax->getAccessToken(), $organizationId);
+        $paymentMethod = $paymentMethod->getAll();
+        throw new \Exception(json_encode($paymentMethod->Rows[0]["PaymentMethodId"]));
 
     }
 }

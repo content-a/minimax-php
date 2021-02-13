@@ -54,7 +54,7 @@ class VatRate
     private $model_name = "vatrates";
 
     /**
-     * Makes http request and return response.
+     * Retrieve standart rate
      *
      * @return object
      */
@@ -64,6 +64,40 @@ class VatRate
 
         // Set vat rate code.
         $code = "S";
+
+        $response = $this->client->request('GET', MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name . "/code(${code})?date=${date}&countryID=${countryId}");
+
+        return Response::model($response, $this);
+    }
+
+    /**
+     * Retrieve reduced rate.
+     *
+     * @return object
+     */
+    public function getReducedRate($countryId){
+        // Get current date.
+        $date = date(MinimaxApi::DATE_FORMAT);
+
+        // Set vat rate code.
+        $code = "Z";
+
+        $response = $this->client->request('GET', MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name . "/code(${code})?date=${date}&countryID=${countryId}");
+
+        return Response::model($response, $this);
+    }
+
+    /**
+     * Makes http request and return response.
+     *
+     * @return object
+     */
+    public function getNonTaxableRate($countryId){
+        // Get current date.
+        $date = date(MinimaxApi::DATE_FORMAT);
+
+        // Set vat rate code.
+        $code = "N";
 
         $response = $this->client->request('GET', MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name . "/code(${code})?date=${date}&countryID=${countryId}");
 

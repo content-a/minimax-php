@@ -225,4 +225,6 @@ class IssuedInvoice
      * Model name.
      */
     private $model_name = "issuedinvoices";
+
+
 }
