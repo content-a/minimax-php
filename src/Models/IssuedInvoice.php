@@ -227,4 +227,26 @@ class IssuedInvoice
     private $model_name = "issuedinvoices";
 
 
+    public function performIssue(){
+        $id = $this->IssuedInvoiceId;
+        $rowVersion = $this->RowVersion;
+
+        $response = $this->client->request('PUT',
+            MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name . "/${id}/actions/issue?rowVersion=${rowVersion}"
+        );
+    }
+
+    public function generatePDF(){
+        $id = $this->IssuedInvoiceId;
+        $rowVersion = $this->RowVersion;
+
+        $response = $this->client->request('PUT',
+            MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name . "/${id}/actions/generatepdf?rowVersion=${rowVersion}"
+        );
+    }
+
+    public function getDocumentAttachment(){
+        $documentId = $this->Document["ID"];
+        $invoiceAttachmentId = $this->InvoiceAttachment["ID"];
+    }
 }

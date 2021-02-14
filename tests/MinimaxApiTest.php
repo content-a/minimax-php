@@ -5,8 +5,10 @@ namespace MinimaxApi\Tests;
 use Dotenv\Dotenv;
 use MinimaxApi\Models\Country;
 use MinimaxApi\Models\Currency;
+use MinimaxApi\Models\DocumentAttachment;
 use MinimaxApi\Models\DocumentNumbering;
 use MinimaxApi\Models\Employee;
+use MinimaxApi\Models\IssuedInvoice;
 use MinimaxApi\Models\Item;
 use MinimaxApi\Models\MinimaxApi;
 use MinimaxApi\Models\mMApiFkField;
@@ -123,7 +125,24 @@ class MinimaxApiTest extends TestCase
 //
 //    }
 
-    public function testPaymentMethod()
+//    public function testPaymentMethod()
+//    {
+//        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
+//        $dotenv->load();
+//
+//        // Create minimax with credentials.
+//        $minimax = new MinimaxApi($_ENV["CLIENT_ID"], $_ENV["CLIENT_SECRET"], $_ENV["USER_NAME"], $_ENV["USER_PASSWORD"]);
+//
+//        // Get first organization.
+//        $organizationId = $minimax->getOrganizations()[0]["Organisation"]["ID"];
+//
+//        $paymentMethod = new PaymentMethod($minimax->getAccessToken(), $organizationId);
+//        $paymentMethod = $paymentMethod->getAll();
+//        throw new \Exception(json_encode($paymentMethod->Rows[0]["PaymentMethodId"]));
+//
+//    }
+
+    public function testInvoice()
     {
         $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
         $dotenv->load();
@@ -134,9 +153,19 @@ class MinimaxApiTest extends TestCase
         // Get first organization.
         $organizationId = $minimax->getOrganizations()[0]["Organisation"]["ID"];
 
-        $paymentMethod = new PaymentMethod($minimax->getAccessToken(), $organizationId);
-        $paymentMethod = $paymentMethod->getAll();
-        throw new \Exception(json_encode($paymentMethod->Rows[0]["PaymentMethodId"]));
+        $invoice = new IssuedInvoice($minimax->getAccessToken(), $organizationId);
+        $list = $invoice->getAll();
+        $invoiceResult = $list->Rows[0];
+//        throw new \Exception(json_encode($invoice["IssuedInvoiceId"]));
+        $invoice = $invoice->get($invoiceResult["IssuedInvoiceId"]);
+        $invoice->set($minimax->getAccessToken(), $organizationId);
+//        $invoice->performIssue();
+
+        $d = new DocumentAttachment($minimax->getAccessToken(), $organizationId);
+        $a = $d->getDocumentAttachment(1, 2);
+
 
     }
+
+
 }
