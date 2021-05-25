@@ -244,9 +244,4 @@ class IssuedInvoice
             MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name . "/${id}/actions/generatepdf?rowVersion=${rowVersion}"
         );
     }
-
-    public function getDocumentAttachment(){
-        $documentId = $this->Document["ID"];
-        $invoiceAttachmentId = $this->InvoiceAttachment["ID"];
-    }
 }

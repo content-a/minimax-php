@@ -68,7 +68,7 @@ class Customer
     //     <li>N – Enduser.</li>
     // </ul>
     // Mandatory field. Max length: 1
-    public $SubjectToVAT;
+    public $SubjectToVAT = "N";
     // Take customers country into account for bookkeeping (Foreign endusers only).
     // Usage:
     // <ul>
@@ -131,4 +131,31 @@ class Customer
      * Model name.
      */
     private $model_name = "customers";
+
+
+    /**
+     * Retrieve existing customer or create new one.
+     *
+     * @param $fullName
+     * @return string Customer id
+     */
+    public function getOrCreate($fullName){
+        // Retrieve customer with full name.
+        $customers = $this->getAll($fullName);
+
+        // Customer doesnt exist, create a new one.
+        if(count($customers->Rows) == 0){
+
+            $this->Name = $fullName;
+
+            // Add to minimax.
+            $customerId = $this->add();
+        }
+        else{
+            // Use existing customer.
+            $customerId = $customers->Rows[0]["CustomerId"];
+        }
+
+        return $customerId;
+    }
 }

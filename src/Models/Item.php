@@ -59,7 +59,7 @@ class Item
     // <br />
     // Default value: N.
     // Mandatory field. Max length: 2
-    public $StocksManagedOnlyByQuantity = "D";
+    public $StocksManagedOnlyByQuantity;
     // Item unit of measurement.
     // Max length: 3
     public $UnitOfMeasurement;
