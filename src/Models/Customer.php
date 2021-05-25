@@ -136,7 +136,7 @@ class Customer
     /**
      * Retrieve existing customer or create new one.
      *
-     * @param $fullName
+     * @param string $fullName Full name of a person.
      * @return string Customer id
      */
     public function getOrCreate($fullName){
