@@ -136,17 +136,30 @@ class Customer
     /**
      * Retrieve existing customer or create new one.
      *
-     * @param string $fullName Full name of a person.
+     * @param string $name Full name of a person.
+     * @param string $address
+     * @param string $postCode
+     * @param string $city
+     * @param string $countryId
+     * @param string $currencyId
+     * @param string $subjectedToVat
+     *
      * @return string Customer id
      */
-    public function getOrCreate($fullName){
+    public function getOrCreate($name, $address, $postCode, $city, $countryId, $currencyId, $subjectedToVat = "N"){
         // Retrieve customer with full name.
-        $customers = $this->getAll($fullName);
+        $customers = $this->getAll($name);
 
         // Customer doesnt exist, create a new one.
         if(count($customers->Rows) == 0){
 
-            $this->Name = $fullName;
+            $this->Name = $name;
+            $this->Address = $address;
+            $this->PostalCode = $postCode;
+            $this->City = $city;
+            $this->Country->ID = $countryId;
+            $this->Currency->ID = $currencyId;
+            $this->SubjectToVAT = $subjectedToVat;
 
             // Add to minimax.
             $customerId = $this->add();
