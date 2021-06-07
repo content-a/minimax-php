@@ -157,8 +157,8 @@ class Customer
             $this->Address = $address;
             $this->PostalCode = $postCode;
             $this->City = $city;
-            $this->Country->ID = $countryId;
-            $this->Currency->ID = $currencyId;
+            $this->Country = new mMApiFkField($countryId);
+            $this->Currency = new mMApiFkField($currencyId);
             $this->SubjectToVAT = $subjectedToVat;
 
             // Add to minimax.
