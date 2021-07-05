@@ -114,7 +114,8 @@ class MinimaxApi
                 'Authorization' => 'Bearer ' . $this->getAccessToken(),
             ],
         ]);
+        $model = new Organisation();
 
-        return Response::make($response);
+        return Response::model($response, $model);
     }
 }

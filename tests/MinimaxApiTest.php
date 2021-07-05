@@ -5,6 +5,7 @@ namespace MinimaxApi\Tests;
 use Dotenv\Dotenv;
 use MinimaxApi\Models\Country;
 use MinimaxApi\Models\Currency;
+use MinimaxApi\Models\Customer;
 use MinimaxApi\Models\DocumentAttachment;
 use MinimaxApi\Models\DocumentNumbering;
 use MinimaxApi\Models\Employee;
@@ -16,6 +17,7 @@ use MinimaxApi\Models\PaymentMethod;
 use MinimaxApi\Models\ReportTemplate;
 use MinimaxApi\Models\SearchFilter;
 use MinimaxApi\Models\VatRate;
+use MinimaxApi\Traits\ModelConstructor;
 use MinimaxApi\Traits\Response;
 use PHPUnit\Framework\TestCase;
 
@@ -142,7 +144,32 @@ class MinimaxApiTest extends TestCase
 //
 //    }
 
-    public function testInvoice()
+//    public function testInvoice()
+//    {
+//        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
+//        $dotenv->load();
+//
+//        // Create minimax with credentials.
+//        $minimax = new MinimaxApi($_ENV["CLIENT_ID"], $_ENV["CLIENT_SECRET"], $_ENV["USER_NAME"], $_ENV["USER_PASSWORD"]);
+//
+//        // Get first organization.
+//        $organizationId = $minimax->getOrganizations()[0]["Organisation"]["ID"];
+//
+//        $invoice = new IssuedInvoice($minimax->getAccessToken(), $organizationId);
+//        $list = $invoice->getAll();
+//        $invoiceResult = $list->Rows[0];
+////        throw new \Exception(json_encode($invoice["IssuedInvoiceId"]));
+//        $invoice = $invoice->get($invoiceResult["IssuedInvoiceId"]);
+//        $invoice->set($minimax->getAccessToken(), $organizationId);
+////        $invoice->performIssue();
+//
+//        $d = new DocumentAttachment($minimax->getAccessToken(), $organizationId);
+//        $a = $d->getDocumentAttachment(1, 2);
+//
+//
+//    }
+
+    public function testCustomer()
     {
         $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
         $dotenv->load();
@@ -153,18 +180,19 @@ class MinimaxApiTest extends TestCase
         // Get first organization.
         $organizationId = $minimax->getOrganizations()[0]["Organisation"]["ID"];
 
-        $invoice = new IssuedInvoice($minimax->getAccessToken(), $organizationId);
-        $list = $invoice->getAll();
-        $invoiceResult = $list->Rows[0];
-//        throw new \Exception(json_encode($invoice["IssuedInvoiceId"]));
-        $invoice = $invoice->get($invoiceResult["IssuedInvoiceId"]);
-        $invoice->set($minimax->getAccessToken(), $organizationId);
-//        $invoice->performIssue();
+        // Get country Slovenia.
+        $country = new Country($minimax->getAccessToken(), $organizationId);
+        $country = $country->getSlovenia();
 
-        $d = new DocumentAttachment($minimax->getAccessToken(), $organizationId);
-        $a = $d->getDocumentAttachment(1, 2);
+        // Country also contains domestic currency.
+        $currencyId = $country->Currency["ID"];
 
+        // Retrieve standart vat rate.
+        $vatrate = new VatRate($minimax->getAccessToken(), $organizationId);
+        $vatrate = $vatrate->getStandartRate($country->CountryId);
 
+        $customer = new Customer($minimax->getAccessToken(), $organizationId);
+        $customer = $customer->getOrCreate("PODJETJE2", "asd", "1111", "Velenje", $country->CountryId, $currencyId, "N");
     }
 
 

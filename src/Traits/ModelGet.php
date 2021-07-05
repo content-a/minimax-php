@@ -21,6 +21,5 @@ trait ModelGet
         $response = $this->client->request('GET', MinimaxApi::API_URL . "api/orgs/" . $this->organizationId . "/" . $this->model_name . "/${id}");
 
         return Response::model($response, $this);
-
     }
 }

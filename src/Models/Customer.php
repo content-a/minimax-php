@@ -146,7 +146,7 @@ class Customer
      *
      * @return string Customer id
      */
-    public function getOrCreate($name, $address, $postCode, $city, $countryId, $currencyId, $subjectedToVat = "N"){
+    public function getOrCreate($name, $address, $postCode, $city, $countryId, $currencyId, $subjectedToVat = "N", $vatIdentificationNumber = ""){
         // Retrieve customer with full name.
         $customers = $this->getAll($name);
 
@@ -160,6 +160,7 @@ class Customer
             $this->Country = new mMApiFkField($countryId);
             $this->Currency = new mMApiFkField($currencyId);
             $this->SubjectToVAT = $subjectedToVat;
+            $this->VATIdentificationNumber = $vatIdentificationNumber;
 
             // Add to minimax.
             $customerId = $this->add();
